@@ -133,7 +133,7 @@ function install_vault_binary {
     log "ERROR" "Unsupported architecture: $ARCH"
     exit_script 1
   fi
-  VAULT_URL="https://releases.hashicorp.com/vault/${vault_version}/vault_${vault_version}_linux_${VAULT_ARCH}.zip"
+  VAULT_URL="https://releases.hashicorp.com/vault/${vault_version}/vault_${vault_version}_linux_$VAULT_ARCH.zip"
   log "INFO" "Downloading Vault Enterprise binary from $VAULT_URL"
   sudo curl -so $VAULT_DIR_BIN/vault.zip "$VAULT_URL"
   if [[ $? -ne 0 ]]; then

@@ -8,7 +8,7 @@ locals {
   }
 
   # Check if vm_instance_type is a Graviton instance using regex
-  is_graviton_instance = can(regex("^(t4g|c6g|c7g|m6g|m7g|r6g|r7g|g5g|im4gn|is4gen)\\.", var.vm_instance_type))
+  is_graviton_instance = can(regex("^(t4g|c6g|c7g|m6g|m7g|m8g|r6g|r7g|g5g|im4gn|is4gen)\\.", var.vm_instance_type))
 
   # Select AMI based on instance type, overridden by vm_image_id if provided
   launch_template_image_id = var.vm_image_id == null ? (

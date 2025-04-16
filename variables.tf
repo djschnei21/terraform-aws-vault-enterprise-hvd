@@ -157,9 +157,9 @@ variable "vault_raft_auto_join_tag" {
 }
 
 variable "vault_raft_performance_multiplier" {
-  description = "Raft performance multiplier value. Defaults to 0, which is the default Vault value."
+  description = "Raft performance multiplier value. Defaults to 5, which is the default Vault value."
   type        = number
-  default     = 0
+  default     = 5
 
   validation {
     condition     = var.vault_raft_performance_multiplier >= 0 && var.vault_raft_performance_multiplier <= 10

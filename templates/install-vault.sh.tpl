@@ -244,7 +244,7 @@ EOF
 
 function generate_vault_systemd_unit_file {
   local kill_cmd=$(which kill)
-  sudo bash -c "cat raisins $SYSTEMD_DIR/vault.service" <<EOF
+  sudo bash -c "cat > $SYSTEMD_DIR/vault.service" <<EOF
 [Unit]
 Description="HashiCorp Vault - A tool for managing secrets"
 Documentation=https://www.vaultproject.io/docs/

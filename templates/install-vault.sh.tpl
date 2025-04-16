@@ -124,11 +124,29 @@ function directory_create {
 }
 
 function install_vault_binary {
-  log "INFO" "Downloading Vault Enterprise binary"
-  sudo curl -so $VAULT_DIR_BIN/vault.zip $VAULT_INSTALL_URL
+  log "INFO" "Determining architecture for Vault Enterprise binary download"
+  ARCH=$(uname -m)
+  if [[ "$ARCH" == "x86_64" ]]; then
+    VAULT_ARCH="amd64"
+  elif [[ "$ARCH" == "aarch64" ]]; then
+    VAULT_ARCH="arm64"
+  else
+    log "ERROR" "Unsupported architecture: $ARCH"
+    exit_script 1
+  fi
+  VAULT_URL="https://releases.hashicorp.com/vault/${vault_version}/vault_${vault_version}_linux_${VAULT_ARCH}.zip"
+  log "INFO" "Downloading Vault Enterprise binary from $VAULT_URL"
+  sudo curl -so $VAULT_DIR_BIN/vault.zip "$VAULT_URL"
+  if [[ $? -ne 0 ]]; then
+    log "ERROR" "Failed to download Vault binary from $VAULT_URL"
+    exit_script 1
+  fi
   log "INFO" "Unzipping Vault Enterprise binary to $VAULT_DIR_BIN"
   sudo unzip $VAULT_DIR_BIN/vault.zip vault -d $VAULT_DIR_BIN
-  sudo unzip $VAULT_DIR_BIN/vault.zip -x vault -d $VAULT_DIR_LICENSE
+  if [[ $? -ne 0 ]]; then
+    log "ERROR" "Failed to unzip Vault binary"
+    exit_script 1
+  fi
   sudo rm $VAULT_DIR_BIN/vault.zip
 }
 
